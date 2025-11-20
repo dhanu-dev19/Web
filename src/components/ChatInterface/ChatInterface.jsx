@@ -1,24 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import Message from './Message.jsx'
+import { ChatContext } from '../../context/ChatContext.jsx'
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      role: 'agent',
-      content: `Hello! I'm your Code Helper Agent. I can help you with:
-
-🐛 **Debug Error** - Find and fix bugs in your code
-📝 **Explain Code** - Understand what code does step by step  
-✨ **Improve Code** - Get suggestions for better performance and readability
-🧪 **Write Tests** - Generate test cases for your code
-📚 **Best Practices** - Learn coding standards and conventions
-
-Paste your code or ask a question to get started!`,
-      timestamp: new Date()
-    }
-  ])
-  
+  const { messages } = useContext(ChatContext)
   const messagesEndRef = useRef(null)
 
   const scrollToBottom = () => {
@@ -28,14 +13,6 @@ Paste your code or ask a question to get started!`,
   useEffect(() => {
     scrollToBottom()
   }, [messages])
-
-  const addMessage = (message) => {
-    setMessages(prev => [...prev, { 
-      ...message, 
-      id: Date.now(),
-      timestamp: new Date()
-    }])
-  }
 
   return (
     <div className="h-96 overflow-y-auto border-b border-gray-200 bg-gray-50">
